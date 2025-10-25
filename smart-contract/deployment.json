@@ -1,11 +1,11 @@
 {
-  "VibeCasterPoints": "0xEe832dc966BC8D66742aA0c01bC7797116839634",
-  "VibeCasterBadges": "0x5820440e686A5519ca5Eb1c6148C54d77DE23115",
-  "RoastMeContract": "0x15978cDBe7cc4238825647b1A61d6efA9371D5C0",
-  "IcebreakerContract": "0x7CecE53Ea570457C885fE09C39E82D1cD8A0da6B",
-  "ChainReactionContract": "0x3A8F031e2A4040E8D599b8dbAB09B4f6251a07B9",
-  "VibeCasterAdmin": "0xfB462A2f915d45BE8292B8e81ca4bbe7d1072b50",
-  "deployer": "0x0eE1F2b663547dAa487F57C517C7563AdCf86da0",
-  "network": "base-sepolia",
-  "timestamp": "2025-08-30T01:03:03.557Z"
+  "VibeCasterPoints": "0x60Dc29BE10cf0721F62DEEA76FC98C0cE60cf199",
+  "VibeCasterBadges": "0xe2afB6D954A151361d0d222b9Ed7b3AF53Bcc6e4",
+  "RoastMeContract": "0x91a89F6D69bbc83BE54b5A60677116D0283507Af",
+  "IcebreakerContract": "0xB004FEfe4B061586a7Bf5936CE8C34847b8c896f",
+  "ChainReactionContract": "0xF45368bf5A00b48E8571e4b85054583bF818014E",
+  "VibeCasterAdmin": "0xbA9ec8012Cef69784044255398aBe2C7A6A22702",
+  "deployer": "0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10",
+  "network": "base-mainnet",
+  "timestamp": "2025-10-18T14:05:43.431Z"
 }

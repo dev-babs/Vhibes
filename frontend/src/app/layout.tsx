@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { MiniKitContextProvider } from "@/providers/MiniKitProvider";
+import AppKitProvider from "@/contexts/AppKitProvider";
+import { headers } from 'next/headers';
 
 export async function generateMetadata(): Promise<Metadata> {
   const URL = "https://vibecasters.vercel.app";
@@ -27,17 +29,22 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersObj = await headers();
+  const cookies = headersObj.get('cookie');
+
   return (
     <html lang="en">
       <body className="vibecaster-bg">
-        <MiniKitContextProvider>
-          <Providers>{children}</Providers>
-        </MiniKitContextProvider>
+        <AppKitProvider cookies={cookies}>
+          <MiniKitContextProvider>
+            <Providers>{children}</Providers>
+          </MiniKitContextProvider>
+        </AppKitProvider>
       </body>
     </html>
   );

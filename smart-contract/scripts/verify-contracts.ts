@@ -3,18 +3,18 @@ import { ethers } from "hardhat";
 async function main() {
   console.log("🔍 Verifying VibeCaster contracts on BaseScan...\n");
 
-  // Contract addresses from successful deployment
+  // Contract addresses from successful deployment on Base Mainnet
   const contracts = [
     {
       name: "VibeCasterPoints",
-      address: "0xEe832dc966BC8D66742aA0c01bC7797116839634",
-      constructorArgs: ["0x0eE1F2b663547dAa487F57C517C7563AdCf86da0"] // deployer address
+      address: "0x60Dc29BE10cf0721F62DEEA76FC98C0cE60cf199",
+      constructorArgs: ["0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10"] // deployer address
     },
     {
       name: "VibeCasterBadges",
-      address: "0x5820440e686A5519ca5Eb1c6148C54d77DE23115",
+      address: "0xe2afB6D954A151361d0d222b9Ed7b3AF53Bcc6e4",
       constructorArgs: [
-        "0x0eE1F2b663547dAa487F57C517C7563AdCf86da0", // owner
+        "0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10", // owner
         "VibeCaster Badges", // name
         "VCB", // symbol
         "https://ipfs.io/ipfs/" // baseURI
@@ -22,35 +22,35 @@ async function main() {
     },
     {
       name: "RoastMeContract",
-      address: "0x15978cDBe7cc4238825647b1A61d6efA9371D5C0",
+      address: "0x91a89F6D69bbc83BE54b5A60677116D0283507Af",
       constructorArgs: [
-        "0x0eE1F2b663547dAa487F57C517C7563AdCf86da0", // owner
-        "0xEe832dc966BC8D66742aA0c01bC7797116839634", // points contract
-        "0x5820440e686A5519ca5Eb1c6148C54d77DE23115"  // badges contract
+        "0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10", // owner
+        "0x60Dc29BE10cf0721F62DEEA76FC98C0cE60cf199", // points contract
+        "0xe2afB6D954A151361d0d222b9Ed7b3AF53Bcc6e4"  // badges contract
       ]
     },
     {
       name: "IcebreakerContract",
-      address: "0x7CecE53Ea570457C885fE09C39E82D1cD8A0da6B",
+      address: "0xB004FEfe4B061586a7Bf5936CE8C34847b8c896f",
       constructorArgs: [
-        "0x0eE1F2b663547dAa487F57C517C7563AdCf86da0", // owner
-        "0xEe832dc966BC8D66742aA0c01bC7797116839634", // points contract
-        "0x5820440e686A5519ca5Eb1c6148C54d77DE23115"  // badges contract
+        "0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10", // owner
+        "0x60Dc29BE10cf0721F62DEEA76FC98C0cE60cf199", // points contract
+        "0xe2afB6D954A151361d0d222b9Ed7b3AF53Bcc6e4"  // badges contract
       ]
     },
     {
       name: "ChainReactionContract",
-      address: "0x3A8F031e2A4040E8D599b8dbAB09B4f6251a07B9",
+      address: "0xF45368bf5A00b48E8571e4b85054583bF818014E",
       constructorArgs: [
-        "0x0eE1F2b663547dAa487F57C517C7563AdCf86da0", // owner
-        "0xEe832dc966BC8D66742aA0c01bC7797116839634", // points contract
-        "0x5820440e686A5519ca5Eb1c6148C54d77DE23115"  // badges contract
+        "0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10", // owner
+        "0x60Dc29BE10cf0721F62DEEA76FC98C0cE60cf199", // points contract
+        "0xe2afB6D954A151361d0d222b9Ed7b3AF53Bcc6e4"  // badges contract
       ]
     },
     {
       name: "VibeCasterAdmin",
-      address: "0xfB462A2f915d45BE8292B8e81ca4bbe7d1072b50",
-      constructorArgs: ["0x0eE1F2b663547dAa487F57C517C7563AdCf86da0"] // owner
+      address: "0xbA9ec8012Cef69784044255398aBe2C7A6A22702",
+      constructorArgs: ["0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10"] // owner
     }
   ];
 
@@ -68,7 +68,7 @@ async function main() {
       
       // Run hardhat verify command
       const { exec } = require('child_process');
-      const verifyCommand = `npx hardhat verify --network base-sepolia ${contract.address} ${contract.constructorArgs.join(' ')}`;
+      const verifyCommand = `npx hardhat verify --network base-mainnet ${contract.address} ${contract.constructorArgs.join(' ')}`;
       
       exec(verifyCommand, (error: any, stdout: any, stderr: any) => {
         if (error) {
@@ -80,7 +80,7 @@ async function main() {
         }
         console.log(`✅ ${contract.name} verification output:`);
         console.log(stdout);
-        console.log(`🔗 View on BaseScan: https://sepolia.basescan.org/address/${contract.address}\n`);
+        console.log(`🔗 View on BaseScan: https://basescan.org/address/${contract.address}\n`);
       });
 
       // Add delay between verifications to avoid rate limiting
@@ -98,7 +98,7 @@ async function main() {
   
   contracts.forEach(contract => {
     console.log(`# ${contract.name}`);
-    console.log(`npx hardhat verify --network base-sepolia ${contract.address} ${contract.constructorArgs.join(' ')}`);
+    console.log(`npx hardhat verify --network base-mainnet ${contract.address} ${contract.constructorArgs.join(' ')}`);
     console.log();
   });
 }

@@ -5,11 +5,16 @@ import "dotenv/config";
 const config: HardhatUserConfig = {
   solidity: "0.8.26",
   networks: {
-    'base-sepolia': {
-      url: "https://sepolia.base.org",
+    'base-mainnet': {
+      url: process.env.BASE_MAINNET_RPC_URL || "https://mainnet.base.org",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: 84532,
+      chainId: 8453,
     },
+    // 'base-sepolia': {
+    //   url: "https://sepolia.base.org",
+    //   accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    //   chainId: 84532,
+    // },
     localhost: {
       url: "http://127.0.0.1:8545",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],

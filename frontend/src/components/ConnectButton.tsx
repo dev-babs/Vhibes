@@ -48,9 +48,16 @@ export default function ConnectButton() {
     }
   }, [connectors, connect, isConnected, isFrameReady]);
 
-  if (!address) {
+  // If connected, show wallet connection component
+  if (isConnected && address) {
+    return <WalletConnection />;
+  }
+
+  // If in Farcaster Frame, use your custom WalletModal (preserves Farcaster UX)
+  if (isInFarcasterFrame) {
     return <WalletModal />;
   }
 
-  return <WalletConnection />;
+  // If not in Farcaster Frame, use AppKit button (qualifies for Builder Rewards)
+  return <appkit-button />;
 }

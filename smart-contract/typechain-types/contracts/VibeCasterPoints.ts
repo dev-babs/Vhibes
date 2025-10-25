@@ -28,6 +28,7 @@ export interface VibeCasterPointsInterface extends Interface {
     nameOrSignature:
       | "activityStreak"
       | "activityStreakBonus"
+      | "addLevel"
       | "authorizeContract"
       | "authorizedContracts"
       | "dailyLogin"
@@ -39,17 +40,24 @@ export interface VibeCasterPointsInterface extends Interface {
       | "getLastActivity"
       | "getLastLogin"
       | "getLeaderboard"
+      | "getLevel"
+      | "getLevels"
       | "getLoginStreak"
       | "getPoints"
+      | "getUserLevel"
       | "isAuthorized"
       | "lastActivityTimestamp"
       | "lastLoginTimestamp"
+      | "levels"
       | "loginStreak"
       | "owner"
       | "recordActivity"
+      | "removeLevel"
       | "renounceOwnership"
       | "streakBonusPoints"
+      | "totalLevels"
       | "transferOwnership"
+      | "updateLevel"
       | "updatePointValues"
       | "userPoints"
   ): FunctionFragment;
@@ -60,6 +68,9 @@ export interface VibeCasterPointsInterface extends Interface {
       | "ContractAuthorized"
       | "ContractDeauthorized"
       | "DailyLogin"
+      | "LevelAdded"
+      | "LevelRemoved"
+      | "LevelUpdated"
       | "OwnershipTransferred"
       | "PointsAwarded"
       | "PointsDeducted"
@@ -72,6 +83,10 @@ export interface VibeCasterPointsInterface extends Interface {
   encodeFunctionData(
     functionFragment: "activityStreakBonus",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addLevel",
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "authorizeContract",
@@ -118,11 +133,20 @@ export interface VibeCasterPointsInterface extends Interface {
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "getLevel",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "getLevels", values?: undefined): string;
+  encodeFunctionData(
     functionFragment: "getLoginStreak",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getPoints",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUserLevel",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
@@ -138,6 +162,10 @@ export interface VibeCasterPointsInterface extends Interface {
     values: [AddressLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "levels",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "loginStreak",
     values: [AddressLike]
   ): string;
@@ -145,6 +173,10 @@ export interface VibeCasterPointsInterface extends Interface {
   encodeFunctionData(
     functionFragment: "recordActivity",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "removeLevel",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -155,8 +187,16 @@ export interface VibeCasterPointsInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "totalLevels",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateLevel",
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updatePointValues",
@@ -175,6 +215,7 @@ export interface VibeCasterPointsInterface extends Interface {
     functionFragment: "activityStreakBonus",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "addLevel", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "authorizeContract",
     data: BytesLike
@@ -213,11 +254,17 @@ export interface VibeCasterPointsInterface extends Interface {
     functionFragment: "getLeaderboard",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getLevel", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getLevels", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getLoginStreak",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getPoints", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getUserLevel",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isAuthorized",
     data: BytesLike
@@ -230,6 +277,7 @@ export interface VibeCasterPointsInterface extends Interface {
     functionFragment: "lastLoginTimestamp",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "levels", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "loginStreak",
     data: BytesLike
@@ -237,6 +285,10 @@ export interface VibeCasterPointsInterface extends Interface {
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "recordActivity",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "removeLevel",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -248,7 +300,15 @@ export interface VibeCasterPointsInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "totalLevels",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateLevel",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -311,6 +371,54 @@ export namespace DailyLoginEvent {
     user: string;
     points: bigint;
     streak: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace LevelAddedEvent {
+  export type InputTuple = [
+    levelId: BigNumberish,
+    name: string,
+    minPoints: BigNumberish
+  ];
+  export type OutputTuple = [levelId: bigint, name: string, minPoints: bigint];
+  export interface OutputObject {
+    levelId: bigint;
+    name: string;
+    minPoints: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace LevelRemovedEvent {
+  export type InputTuple = [levelId: BigNumberish];
+  export type OutputTuple = [levelId: bigint];
+  export interface OutputObject {
+    levelId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace LevelUpdatedEvent {
+  export type InputTuple = [
+    levelId: BigNumberish,
+    name: string,
+    minPoints: BigNumberish
+  ];
+  export type OutputTuple = [levelId: bigint, name: string, minPoints: bigint];
+  export interface OutputObject {
+    levelId: bigint;
+    name: string;
+    minPoints: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -414,6 +522,12 @@ export interface VibeCasterPoints extends BaseContract {
 
   activityStreakBonus: TypedContractMethod<[], [bigint], "view">;
 
+  addLevel: TypedContractMethod<
+    [name: string, minPoints: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   authorizeContract: TypedContractMethod<
     [contractAddress: AddressLike],
     [void],
@@ -460,9 +574,33 @@ export interface VibeCasterPoints extends BaseContract {
     "view"
   >;
 
+  getLevel: TypedContractMethod<
+    [levelId: BigNumberish],
+    [
+      [string, bigint, boolean] & {
+        name: string;
+        minPoints: bigint;
+        exists: boolean;
+      }
+    ],
+    "view"
+  >;
+
+  getLevels: TypedContractMethod<
+    [],
+    [[string[], bigint[]] & { names: string[]; minPoints: bigint[] }],
+    "view"
+  >;
+
   getLoginStreak: TypedContractMethod<[user: AddressLike], [bigint], "view">;
 
   getPoints: TypedContractMethod<[user: AddressLike], [bigint], "view">;
+
+  getUserLevel: TypedContractMethod<
+    [user: AddressLike],
+    [[string, bigint] & { levelName: string; levelId: bigint }],
+    "view"
+  >;
 
   isAuthorized: TypedContractMethod<
     [contractAddress: AddressLike],
@@ -482,18 +620,44 @@ export interface VibeCasterPoints extends BaseContract {
     "view"
   >;
 
+  levels: TypedContractMethod<
+    [arg0: BigNumberish],
+    [
+      [string, bigint, boolean] & {
+        name: string;
+        minPoints: bigint;
+        exists: boolean;
+      }
+    ],
+    "view"
+  >;
+
   loginStreak: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
 
   owner: TypedContractMethod<[], [string], "view">;
 
   recordActivity: TypedContractMethod<[], [void], "nonpayable">;
 
+  removeLevel: TypedContractMethod<
+    [levelId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
   streakBonusPoints: TypedContractMethod<[], [bigint], "view">;
 
+  totalLevels: TypedContractMethod<[], [bigint], "view">;
+
   transferOwnership: TypedContractMethod<
     [newOwner: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  updateLevel: TypedContractMethod<
+    [levelId: BigNumberish, name: string, minPoints: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -520,6 +684,13 @@ export interface VibeCasterPoints extends BaseContract {
   getFunction(
     nameOrSignature: "activityStreakBonus"
   ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "addLevel"
+  ): TypedContractMethod<
+    [name: string, minPoints: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "authorizeContract"
   ): TypedContractMethod<[contractAddress: AddressLike], [void], "nonpayable">;
@@ -566,11 +737,38 @@ export interface VibeCasterPoints extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "getLevel"
+  ): TypedContractMethod<
+    [levelId: BigNumberish],
+    [
+      [string, bigint, boolean] & {
+        name: string;
+        minPoints: bigint;
+        exists: boolean;
+      }
+    ],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getLevels"
+  ): TypedContractMethod<
+    [],
+    [[string[], bigint[]] & { names: string[]; minPoints: bigint[] }],
+    "view"
+  >;
+  getFunction(
     nameOrSignature: "getLoginStreak"
   ): TypedContractMethod<[user: AddressLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "getPoints"
   ): TypedContractMethod<[user: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getUserLevel"
+  ): TypedContractMethod<
+    [user: AddressLike],
+    [[string, bigint] & { levelName: string; levelId: bigint }],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "isAuthorized"
   ): TypedContractMethod<[contractAddress: AddressLike], [boolean], "view">;
@@ -581,6 +779,19 @@ export interface VibeCasterPoints extends BaseContract {
     nameOrSignature: "lastLoginTimestamp"
   ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
   getFunction(
+    nameOrSignature: "levels"
+  ): TypedContractMethod<
+    [arg0: BigNumberish],
+    [
+      [string, bigint, boolean] & {
+        name: string;
+        minPoints: bigint;
+        exists: boolean;
+      }
+    ],
+    "view"
+  >;
+  getFunction(
     nameOrSignature: "loginStreak"
   ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
   getFunction(
@@ -590,14 +801,27 @@ export interface VibeCasterPoints extends BaseContract {
     nameOrSignature: "recordActivity"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "removeLevel"
+  ): TypedContractMethod<[levelId: BigNumberish], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "renounceOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "streakBonusPoints"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
+    nameOrSignature: "totalLevels"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "updateLevel"
+  ): TypedContractMethod<
+    [levelId: BigNumberish, name: string, minPoints: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "updatePointValues"
   ): TypedContractMethod<
@@ -640,6 +864,27 @@ export interface VibeCasterPoints extends BaseContract {
     DailyLoginEvent.InputTuple,
     DailyLoginEvent.OutputTuple,
     DailyLoginEvent.OutputObject
+  >;
+  getEvent(
+    key: "LevelAdded"
+  ): TypedContractEvent<
+    LevelAddedEvent.InputTuple,
+    LevelAddedEvent.OutputTuple,
+    LevelAddedEvent.OutputObject
+  >;
+  getEvent(
+    key: "LevelRemoved"
+  ): TypedContractEvent<
+    LevelRemovedEvent.InputTuple,
+    LevelRemovedEvent.OutputTuple,
+    LevelRemovedEvent.OutputObject
+  >;
+  getEvent(
+    key: "LevelUpdated"
+  ): TypedContractEvent<
+    LevelUpdatedEvent.InputTuple,
+    LevelUpdatedEvent.OutputTuple,
+    LevelUpdatedEvent.OutputObject
   >;
   getEvent(
     key: "OwnershipTransferred"
@@ -706,6 +951,39 @@ export interface VibeCasterPoints extends BaseContract {
       DailyLoginEvent.InputTuple,
       DailyLoginEvent.OutputTuple,
       DailyLoginEvent.OutputObject
+    >;
+
+    "LevelAdded(uint256,string,uint256)": TypedContractEvent<
+      LevelAddedEvent.InputTuple,
+      LevelAddedEvent.OutputTuple,
+      LevelAddedEvent.OutputObject
+    >;
+    LevelAdded: TypedContractEvent<
+      LevelAddedEvent.InputTuple,
+      LevelAddedEvent.OutputTuple,
+      LevelAddedEvent.OutputObject
+    >;
+
+    "LevelRemoved(uint256)": TypedContractEvent<
+      LevelRemovedEvent.InputTuple,
+      LevelRemovedEvent.OutputTuple,
+      LevelRemovedEvent.OutputObject
+    >;
+    LevelRemoved: TypedContractEvent<
+      LevelRemovedEvent.InputTuple,
+      LevelRemovedEvent.OutputTuple,
+      LevelRemovedEvent.OutputObject
+    >;
+
+    "LevelUpdated(uint256,string,uint256)": TypedContractEvent<
+      LevelUpdatedEvent.InputTuple,
+      LevelUpdatedEvent.OutputTuple,
+      LevelUpdatedEvent.OutputObject
+    >;
+    LevelUpdated: TypedContractEvent<
+      LevelUpdatedEvent.InputTuple,
+      LevelUpdatedEvent.OutputTuple,
+      LevelUpdatedEvent.OutputObject
     >;
 
     "OwnershipTransferred(address,address)": TypedContractEvent<
