@@ -19,8 +19,8 @@ const getWalletConnectConnector = () => {
       metadata: {
         name: "VibeCaster",
         description: "The Future of Social on Farcaster - AI roasts, icebreakers, and viral challenges",
-        url: "https://vibecasters.vercel.app", // Updated to correct URL
-        icons: ["https://vibecasters.vercel.app/vibeCaster-logo.png"], // Updated to correct URL
+        url: "https://vibes-caster.vercel.app",
+        icons: ["https://vibes-caster.vercel.app/vibeCaster-logo.png"],
       },
     });
   }
@@ -38,7 +38,7 @@ export const config = createConfig({
       // Ensure proper configuration for Farcaster Mini App
       appName: "VibeCaster",
       appDescription: "The Future of Social on Farcaster",
-      appIcon: "https://vibecasters.vercel.app/vibeCaster-logo.png",
+      appIcon: "https://vibes-caster.vercel.app/vibeCaster-logo.png",
     }),
     injected({
       target: "metaMask",

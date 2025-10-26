@@ -37,7 +37,7 @@ async function uploadBadgeToIPFS(
   badgeDescription: string,
   badgeType: string,
   rarity: string,
-  externalUrl: string = "https://vibecasters.vercel.app"
+      externalUrl: string = "https://vibes-caster.vercel.app"
 ) {
   try {
     if (!process.env.NEXT_PUBLIC_PINATA_JWT) {

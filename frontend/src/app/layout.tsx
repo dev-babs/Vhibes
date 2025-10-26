@@ -6,21 +6,21 @@ import AppKitProvider from "@/contexts/AppKitProvider";
 import { headers } from 'next/headers';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const URL = "https://vibecasters.vercel.app";
+  const URL = "https://vibes-caster.vercel.app";
   return {
     title: 'VibeCaster',
     description: 'The Future of Social on Farcaster - AI roasts, icebreakers, and viral challenges',
     other: {
       'fc:frame': JSON.stringify({
         version: 'next',
-        imageUrl: 'https://vibecasters.vercel.app/og.png',
+        imageUrl: 'https://vibes-caster.vercel.app/og.png',
         button: {
           title: 'Launch VibeCaster',
           action: {
             type: 'launch_frame',
             name: 'VibeCaster',
             url: URL,
-            splashImageUrl: 'https://vibecasters.vercel.app/vibeCaster-logo.png',
+            splashImageUrl: 'https://vibes-caster.vercel.app/vibeCaster-logo.png',
             splashBackgroundColor: '#0C0420',
           },
         },

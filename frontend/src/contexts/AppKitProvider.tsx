@@ -18,8 +18,8 @@ if (!projectId) {
 const metadata = {
   name: 'VibeCaster',
   description: 'The Future of Social on Farcaster - AI roasts, icebreakers, and viral challenges',
-  url: 'https://vibecasters.vercel.app',
-  icons: ['https://vibecasters.vercel.app/vibeCaster-logo.png']
+  url: 'https://vibes-caster.vercel.app',
+  icons: ['https://vibes-caster.vercel.app/vibeCaster-logo.png']
 }
 
 // Create the AppKit modal

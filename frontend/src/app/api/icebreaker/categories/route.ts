@@ -3,7 +3,7 @@ import { createPublicClient, http } from 'viem';
 import { baseSepolia } from 'viem/chains';
 import IcebreakerContractArtifact from '@/abis/IcebreakerContract.json';
 
-const ICEBREAKER_CONTRACT_ADDRESS = "0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10";
+const ICEBREAKER_CONTRACT_ADDRESS = "0x7CecE53Ea570457C885fE09C39E82D1cD8A0da6B";
 
 const client = createPublicClient({
   chain: baseSepolia,
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
           abi: IcebreakerContractArtifact.abi,
           functionName: 'getCategory',
           args: [BigInt(i)],
-        });
+        }) as any;
 
         if (category && category.exists) {
           categories.push({
