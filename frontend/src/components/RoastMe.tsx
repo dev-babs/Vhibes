@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from "wagmi";
-import { FaCamera, FaUpload, FaFire, FaSpinner, FaTimes, FaCheckCircle, FaImage, FaHeart, FaThumbsDown, FaEye, FaShare, FaTwitter } from "react-icons/fa";
+import { FaCamera, FaUpload, FaFire, FaSpinner, FaTimes, FaCheckCircle, FaImage, FaHeart, FaThumbsDown, FaEye, FaShare, FaTwitter, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Image from "next/image";
 import RoastMeContractArtifact from "../abis/RoastMeContract.json";
 
@@ -33,6 +33,7 @@ export default function RoastMe() {
   const [totalRoasts, setTotalRoasts] = useState<number>(0);
   const [userRoastCount, setUserRoastCount] = useState<number>(0);
   const [showShareOptions, setShowShareOptions] = useState(false);
+  const [showRoastHistory, setShowRoastHistory] = useState(true); // Add toggle state for showing/hiding roasts
 
   // Contract write functions
   const { writeContract: submitRoast, data: submitHash, isPending: isSubmitting } = useWriteContract();
@@ -493,49 +494,57 @@ export default function RoastMe() {
       {/* Roast Gallery */}
       {roastHistory.length > 0 && (
         <div className="space-y-3 md:space-y-4">
-          <h3 className="text-base md:text-lg font-semibold text-white mb-3 md:mb-4 flex items-center gap-2">
-            <FaEye size={14} className="md:w-4 md:h-4" />
-            Your Recent Roasts
-          </h3>
+          <button
+            onClick={() => setShowRoastHistory(!showRoastHistory)}
+            className="w-full flex items-center justify-between text-base md:text-lg font-semibold text-white mb-3 md:mb-4 px-3 md:px-4 py-2 bg-vibecaster-purple-dark/20 hover:bg-vibecaster-purple-dark/30 rounded-lg transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <FaEye size={14} className="md:w-4 md:h-4" />
+              Your Recent Roasts ({roastHistory.length})
+            </div>
+            {showRoastHistory ? <FaChevronUp size={14} className="md:w-4 md:h-4" /> : <FaChevronDown size={14} className="md:w-4 md:h-4" />}
+          </button>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-            {roastHistory.map((roast) => (
-              <div key={roast.id} className="bg-vibecaster-purple-dark/20 p-3 md:p-4 rounded-lg">
-                <div className="relative mb-2 md:mb-3">
-                  <Image
-                    src={roast.image}
-                    alt="Roast selfie"
-                    width={200}
-                    height={200}
-                    className="w-full h-24 md:h-32 object-cover rounded-lg"
-                  />
-                  <div className="absolute top-1 md:top-2 right-1 md:right-2">
-                    <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-red-500/20 flex items-center justify-center">
-                      <FaFire size={10} className="md:w-3 md:h-3 text-red-400" />
+          {showRoastHistory && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+              {roastHistory.map((roast) => (
+                <div key={roast.id} className="bg-vibecaster-purple-dark/20 p-3 md:p-4 rounded-lg">
+                  <div className="relative mb-2 md:mb-3">
+                    <Image
+                      src={roast.image}
+                      alt="Roast selfie"
+                      width={200}
+                      height={200}
+                      className="w-full h-24 md:h-32 object-cover rounded-lg"
+                    />
+                    <div className="absolute top-1 md:top-2 right-1 md:right-2">
+                      <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-red-500/20 flex items-center justify-center">
+                        <FaFire size={10} className="md:w-3 md:h-3 text-red-400" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <p className="text-white text-xs mb-2 md:mb-3 line-clamp-3 leading-relaxed">
+                    {roast.roast}
+                  </p>
+                  
+                  <div className="flex items-center justify-between text-xs text-vibecaster-pink-light">
+                    <span>{roast.timestamp.toLocaleDateString()}</span>
+                    <div className="flex items-center gap-1 md:gap-2">
+                      <span className="flex items-center gap-1">
+                        <FaHeart size={8} className="md:w-2.5 md:h-2.5 text-red-400" />
+                        {roast.funnyVotes}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <FaThumbsDown size={8} className="md:w-2.5 md:h-2.5 text-gray-400" />
+                        {roast.mehVotes}
+                      </span>
                     </div>
                   </div>
                 </div>
-                
-                <p className="text-white text-xs mb-2 md:mb-3 line-clamp-3 leading-relaxed">
-                  {roast.roast}
-                </p>
-                
-                <div className="flex items-center justify-between text-xs text-vibecaster-pink-light">
-                  <span>{roast.timestamp.toLocaleDateString()}</span>
-                  <div className="flex items-center gap-1 md:gap-2">
-                    <span className="flex items-center gap-1">
-                      <FaHeart size={8} className="md:w-2.5 md:h-2.5 text-red-400" />
-                      {roast.funnyVotes}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <FaThumbsDown size={8} className="md:w-2.5 md:h-2.5 text-gray-400" />
-                      {roast.mehVotes}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -12,9 +12,10 @@
   --vibecaster-purple-dark: #5D3C64;
   --vibecaster-purple-medium: #7B466A;
   --vibecaster-lavender: #9F6496;
+  --vibecaster-light-purple: #9F6496;
   --vibecaster-pink-light: #D391B0;
   --vibecaster-pink-dark: #BA6E8F;
-  
+
   /* Legacy VibeCaster colors (commented for reference) */
   /* --primary: #FF6B6B;
   --secondary: #FFD93D;
@@ -42,6 +43,7 @@
   --color-vibecaster-purple-dark: var(--vibecaster-purple-dark);
   --color-vibecaster-purple-medium: var(--vibecaster-purple-medium);
   --color-vibecaster-lavender: var(--vibecaster-lavender);
+  --color-vibecaster-light-purple: var(--vibecaster-light-purple);
   --color-vibecaster-pink-light: var(--vibecaster-pink-light);
   --color-vibecaster-pink-dark: var(--vibecaster-pink-dark);
 
@@ -106,4 +108,21 @@ html {
   .nft-gallery-grid {
     grid-template-columns: repeat(auto-fit, minmax(211px, 1fr));
   }
+}
+
+/* VibeCaster AppKit Button Styling */
+appkit-button::part(button) {
+  background: #9F6496 !important;
+  color: white !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+appkit-button::part(button):hover {
+  background: #B475A3 !important;
+}
+
+appkit-button::part(button):active {
+  transform: scale(0.98) !important;
 }
