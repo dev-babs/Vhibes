@@ -1,6 +1,7 @@
 // src/lib/wagmiConfig.ts
 import { createConfig, http } from "wagmi";
-import { baseSepolia } from "wagmi/chains";
+// import { baseSepolia } from "wagmi/chains"; // Base Sepolia - commented out
+import { base } from "wagmi/chains"; // Base Mainnet
 import {
   injected,
   walletConnect,
@@ -28,18 +29,15 @@ const getWalletConnectConnector = () => {
 };
 
 export const config = createConfig({
-  chains: [baseSepolia],
+  chains: [base], // Base Mainnet
+  // chains: [baseSepolia], // Base Sepolia - commented out
   transports: {
-    [baseSepolia.id]: http("https://sepolia.base.org"),
+    [base.id]: http("https://mainnet.base.org"), // Base Mainnet RPC
+    // [baseSepolia.id]: http("https://sepolia.base.org"), // Base Sepolia RPC - commented out
   },
   connectors: [
     // Farcaster Mini App connector as the primary option
-    farcasterMiniApp({
-      // Ensure proper configuration for Farcaster Mini App
-      appName: "VibeCaster",
-      appDescription: "The Future of Social on Farcaster",
-      appIcon: "https://vibecasters.vercel.app/vibeCaster-logo.png",
-    }),
+    farcasterMiniApp(),
     injected({
       target: "metaMask",
     }),
