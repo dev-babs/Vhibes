@@ -2,31 +2,31 @@ import { ethers } from "hardhat";
 
 async function main() {
   const [deployer] = await ethers.getSigners();
-  console.log("Deploying VibeCaster contracts with the account:", deployer.address);
+  console.log("Deploying vhibes contracts with the account:", deployer.address);
 
   // Get current nonce
   const nonce = await ethers.provider.getTransactionCount(deployer.address);
   console.log("Starting deployment with nonce:", nonce);
 
   try {
-    // Deploy VibeCasterPoints
-    console.log("Deploying VibeCasterPoints...");
-    const VibeCasterPoints = await ethers.getContractFactory("VibeCasterPoints");
-    const pointsContract = await VibeCasterPoints.deploy(deployer.address);
+    // Deploy VhibesPoints
+    console.log("Deploying VhibesPoints...");
+    const VhibesPoints = await ethers.getContractFactory("VhibesPoints");
+    const pointsContract = await VhibesPoints.deploy(deployer.address);
     await pointsContract.waitForDeployment();
-    console.log("VibeCasterPoints deployed to:", await pointsContract.getAddress());
+    console.log("VhibesPoints deployed to:", await pointsContract.getAddress());
 
-    // Deploy VibeCasterBadges
-    console.log("Deploying VibeCasterBadges...");
-    const VibeCasterBadges = await ethers.getContractFactory("VibeCasterBadges");
-    const badgesContract = await VibeCasterBadges.deploy(
+    // Deploy VhibesBadges
+    console.log("Deploying VhibesBadges...");
+    const VhibesBadges = await ethers.getContractFactory("VhibesBadges");
+    const badgesContract = await VhibesBadges.deploy(
       deployer.address,
-      "VibeCaster Badges",
-      "VCB",
+      "vhibes Badges",
+      "VHB",
       "https://ipfs.io/ipfs/" // Base URI for badge metadata
     );
     await badgesContract.waitForDeployment();
-    console.log("VibeCasterBadges deployed to:", await badgesContract.getAddress());
+    console.log("VhibesBadges deployed to:", await badgesContract.getAddress());
 
     // Deploy RoastMeContract
     console.log("Deploying RoastMeContract...");
@@ -61,15 +61,15 @@ async function main() {
     await chainReactionContract.waitForDeployment();
     console.log("ChainReactionContract deployed to:", await chainReactionContract.getAddress());
 
-    // Deploy VibeCasterAdmin
-    console.log("Deploying VibeCasterAdmin...");
-    const VibeCasterAdmin = await ethers.getContractFactory("VibeCasterAdmin");
-    const adminContract = await VibeCasterAdmin.deploy(deployer.address);
+    // Deploy VhibesAdmin
+    console.log("Deploying VhibesAdmin...");
+    const VhibesAdmin = await ethers.getContractFactory("VhibesAdmin");
+    const adminContract = await VhibesAdmin.deploy(deployer.address);
     await adminContract.waitForDeployment();
-    console.log("VibeCasterAdmin deployed to:", await adminContract.getAddress());
+    console.log("VhibesAdmin deployed to:", await adminContract.getAddress());
 
     // Set contracts in admin
-    console.log("Setting contracts in VibeCasterAdmin...");
+    console.log("Setting contracts in VhibesAdmin...");
     await adminContract.setContracts(
       await pointsContract.getAddress(),
       await badgesContract.getAddress(),
@@ -79,42 +79,42 @@ async function main() {
     );
 
     // Set points contract in badges contract
-    console.log("Setting points contract in VibeCasterBadges...");
+    console.log("Setting points contract in VhibesBadges...");
     await badgesContract.setPointsContract(await pointsContract.getAddress());
 
-    // Authorize contracts in VibeCasterPoints
-    console.log("Authorizing contracts in VibeCasterPoints...");
+    // Authorize contracts in VhibesPoints
+    console.log("Authorizing contracts in VhibesPoints...");
     await pointsContract.authorizeContract(await roastContract.getAddress());
     await pointsContract.authorizeContract(await icebreakerContract.getAddress());
     await pointsContract.authorizeContract(await chainReactionContract.getAddress());
     await pointsContract.authorizeContract(await adminContract.getAddress());
-    console.log("Contracts authorized in VibeCasterPoints");
+    console.log("Contracts authorized in VhibesPoints");
 
-    // Authorize minters in VibeCasterBadges
-    console.log("Authorizing minters in VibeCasterBadges...");
+    // Authorize minters in VhibesBadges
+    console.log("Authorizing minters in VhibesBadges...");
     await badgesContract.authorizeMinter(await roastContract.getAddress());
     await badgesContract.authorizeMinter(await icebreakerContract.getAddress());
     await badgesContract.authorizeMinter(await chainReactionContract.getAddress());
     await badgesContract.authorizeMinter(await adminContract.getAddress());
-    console.log("Minters authorized in VibeCasterBadges");
+    console.log("Minters authorized in VhibesBadges");
 
-    console.log("\n=== VIBECASTER DEPLOYMENT COMPLETE ===");
-    console.log("VibeCasterPoints:", await pointsContract.getAddress());
-    console.log("VibeCasterBadges:", await badgesContract.getAddress());
+    console.log("\n=== VHIBES DEPLOYMENT COMPLETE ===");
+    console.log("VhibesPoints:", await pointsContract.getAddress());
+    console.log("VhibesBadges:", await badgesContract.getAddress());
     console.log("RoastMeContract:", await roastContract.getAddress());
     console.log("IcebreakerContract:", await icebreakerContract.getAddress());
     console.log("ChainReactionContract:", await chainReactionContract.getAddress());
-    console.log("VibeCasterAdmin:", await adminContract.getAddress());
+    console.log("VhibesAdmin:", await adminContract.getAddress());
     console.log("=====================================\n");
 
     // Save deployment addresses
     const deploymentInfo = {
-      VibeCasterPoints: await pointsContract.getAddress(),
-      VibeCasterBadges: await badgesContract.getAddress(),
+      VhibesPoints: await pointsContract.getAddress(),
+      VhibesBadges: await badgesContract.getAddress(),
       RoastMeContract: await roastContract.getAddress(),
       IcebreakerContract: await icebreakerContract.getAddress(),
       ChainReactionContract: await chainReactionContract.getAddress(),
-      VibeCasterAdmin: await adminContract.getAddress(),
+      VhibesAdmin: await adminContract.getAddress(),
       deployer: deployer.address,
       network: (await ethers.provider.getNetwork()).name,
       timestamp: new Date().toISOString()

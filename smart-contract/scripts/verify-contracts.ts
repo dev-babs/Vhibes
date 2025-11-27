@@ -1,7 +1,7 @@
 import { run } from "hardhat";
 
 async function main() {
-  console.log("🔍 Verifying VibeCaster contracts on BaseScan (Base Mainnet)...\n");
+  console.log("🔍 Verifying vhibes contracts on BaseScan (Base Mainnet)...\n");
 
   // Contract addresses from latest deployment on Base Mainnet
   // TODO: Update with actual mainnet addresses after deployment
@@ -9,16 +9,16 @@ async function main() {
   /*
   const contracts = [
     {
-      name: "VibeCasterPoints",
+      name: "VhibesPoints",
       address: "0x74c0BBa16c56A33eDF5af21B50358D661AF2FE72",
       constructorArgs: ["0x0eE1F2b663547dAa487F57C517C7563AdCf86da0"] // deployer address
     },
     {
-      name: "VibeCasterBadges",
+      name: "VhibesBadges",
       address: "0x409d41Eb5D25045a1b94BD8b3eE82a6D403F188b",
       constructorArgs: [
         "0x0eE1F2b663547dAa487F57C517C7563AdCf86da0", // owner
-        "VibeCaster Badges", // name
+        "vhibes Badges", // name
         "VCB", // symbol
         "https://ipfs.io/ipfs/" // baseURI
       ]
@@ -51,7 +51,7 @@ async function main() {
       ]
     },
     {
-      name: "VibeCasterAdmin",
+      name: "VhibesAdmin",
       address: "0xa7c38A8aF5c6Caf74F9A181EA745a2dE4B43B865",
       constructorArgs: ["0x0eE1F2b663547dAa487F57C517C7563AdCf86da0"] // owner
     }
@@ -61,16 +61,16 @@ async function main() {
   // Contract addresses from latest deployment on Base Mainnet
   const contracts = [
     {
-      name: "VibeCasterPoints",
+      name: "VhibesPoints",
       address: "0x738be79661d225048F8C0881adBC47bAA9211b7b",
       constructorArgs: ["0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10"] // deployer address
     },
     {
-      name: "VibeCasterBadges",
+      name: "VhibesBadges",
       address: "0xc0F8e7dA9d49A635f18d988f7a7C727eB0dA2C44",
       constructorArgs: [
         "0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10", // owner
-        "VibeCaster Badges", // name
+        "vhibes Badges", // name
         "VCB", // symbol
         "https://ipfs.io/ipfs/" // baseURI
       ]
@@ -103,7 +103,7 @@ async function main() {
       ]
     },
     {
-      name: "VibeCasterAdmin",
+      name: "VhibesAdmin",
       address: "0x4548f1c691b254DB4532C05D2118f66D2A78ec1C",
       constructorArgs: ["0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10"] // owner
     }

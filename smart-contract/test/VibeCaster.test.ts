@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("VibeCaster Contracts", function () {
+describe("vhibes Contracts", function () {
   let pointsContract: any;
   let badgesContract: any;
   let roastContract: any;
@@ -17,16 +17,16 @@ describe("VibeCaster Contracts", function () {
   beforeEach(async function () {
     [owner, user1, user2, user3, admin1] = await ethers.getSigners();
 
-    // Deploy VibeCasterPoints
-    const VibeCasterPoints = await ethers.getContractFactory("VibeCasterPoints");
-    pointsContract = await VibeCasterPoints.deploy(owner.address);
+    // Deploy VhibesPoints
+    const VhibesPoints = await ethers.getContractFactory("VhibesPoints");
+    pointsContract = await VhibesPoints.deploy(owner.address);
 
-    // Deploy VibeCasterBadges
-    const VibeCasterBadges = await ethers.getContractFactory("VibeCasterBadges");
-    badgesContract = await VibeCasterBadges.deploy(
+    // Deploy VhibesBadges
+    const VhibesBadges = await ethers.getContractFactory("VhibesBadges");
+    badgesContract = await VhibesBadges.deploy(
       owner.address,
-      "VibeCaster Badges",
-      "VCB",
+      "vhibes Badges",
+      "VHB",
       "https://ipfs.io/ipfs/"
     );
 
@@ -54,9 +54,9 @@ describe("VibeCaster Contracts", function () {
       await badgesContract.getAddress()
     );
 
-    // Deploy VibeCasterAdmin
-    const VibeCasterAdmin = await ethers.getContractFactory("VibeCasterAdmin");
-    adminContract = await VibeCasterAdmin.deploy(owner.address);
+    // Deploy VhibesAdmin
+    const VhibesAdmin = await ethers.getContractFactory("VhibesAdmin");
+    adminContract = await VhibesAdmin.deploy(owner.address);
 
     // Set contracts in admin
     await adminContract.setContracts(
@@ -88,7 +88,7 @@ describe("VibeCaster Contracts", function () {
     await chainReactionContract.transferOwnership(await adminContract.getAddress());
   });
 
-  describe("VibeCasterPoints", function () {
+  describe("VhibesPoints", function () {
     it("Should award points correctly", async function () {
       await roastContract.connect(user1).submitRoast("QmHash1", "QmHash2");
       expect(await pointsContract.getPoints(user1.address)).to.equal(10);
@@ -107,7 +107,7 @@ describe("VibeCaster Contracts", function () {
     });
   });
 
-  describe("VibeCasterBadges", function () {
+  describe("VhibesBadges", function () {
     it("Should mint badges correctly", async function () {
       await badgesContract.connect(owner).mintBadge(user1.address, "First Roast", "ipfs://QmHash");
       expect(await badgesContract.balanceOf(user1.address)).to.equal(1);
@@ -215,7 +215,7 @@ describe("VibeCaster Contracts", function () {
     });
   });
 
-  describe("VibeCasterAdmin", function () {
+  describe("VhibesAdmin", function () {
     it("Should allow authorized admins to award points", async function () {
       await adminContract.connect(admin1).awardPoints(user1.address, 100, "Test award");
       expect(await pointsContract.getPoints(user1.address)).to.equal(100);
