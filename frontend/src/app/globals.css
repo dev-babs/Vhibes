@@ -4,17 +4,14 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&display=swap');
 
 /* 
-  STEP 1: Define VibeCaster color palette using CSS variables.
+  STEP 1: Define vhibes color palette using CSS variables.
 */
 :root {
-  /* VibeCaster Brand Colors */
-  --vibecaster-dark: #0C0420;
-  --vibecaster-purple-dark: #5D3C64;
-  --vibecaster-purple-medium: #7B466A;
-  --vibecaster-lavender: #9F6496;
-  --vibecaster-light-purple: #9F6496;
-  --vibecaster-pink-light: #D391B0;
-  --vibecaster-pink-dark: #BA6E8F;
+  /* vhibes Brand Colors - Coral Red Palette */
+  --vhibes-dark: #C63A35;
+  --vhibes-primary: #EA504B;
+  --vhibes-light: #FF7873;
+  --vhibes-white: #FFFFFF;
 
   /* Legacy VibeCaster colors (commented for reference) */
   /* --primary: #FF6B6B;
@@ -24,28 +21,34 @@
   --textDark: #222222;
   --textMuted: #666666; */
 
-  /* VibeCaster theme colors */
-  --background: var(--vibecaster-dark);
-  --foreground: #ffffff;
-  --card-bg: rgba(93, 60, 100, 0.1);
-  --card-border: rgba(159, 100, 150, 0.2);
+  /* vhibes theme colors */
+  --background: var(--vhibes-dark);
+  --foreground: var(--vhibes-white);
+  --card-bg: rgba(198, 58, 53, 0.1);
+  --card-border: rgba(234, 80, 75, 0.2);
 }
 
 /* 
-  STEP 2: Register VibeCaster variables with Tailwind's theme.
+  STEP 2: Register vhibes variables with Tailwind's theme.
 */
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* VibeCaster color mapping */
-  --color-vibecaster-dark: var(--vibecaster-dark);
-  --color-vibecaster-purple-dark: var(--vibecaster-purple-dark);
-  --color-vibecaster-purple-medium: var(--vibecaster-purple-medium);
-  --color-vibecaster-lavender: var(--vibecaster-lavender);
-  --color-vibecaster-light-purple: var(--vibecaster-light-purple);
-  --color-vibecaster-pink-light: var(--vibecaster-pink-light);
-  --color-vibecaster-pink-dark: var(--vibecaster-pink-dark);
+  /* vhibes color mapping */
+  --color-vhibes-dark: var(--vhibes-dark);
+  --color-vhibes-primary: var(--vhibes-primary);
+  --color-vhibes-light: var(--vhibes-light);
+  --color-vhibes-white: var(--vhibes-white);
+
+  /* Legacy VibeCaster color mappings (for backward compatibility) */
+  --color-vibecaster-dark: var(--vhibes-dark);
+  --color-vibecaster-purple-dark: var(--vhibes-dark);
+  --color-vibecaster-purple-medium: var(--vhibes-primary);
+  --color-vibecaster-lavender: var(--vhibes-primary);
+  --color-vibecaster-light-purple: var(--vhibes-light);
+  --color-vibecaster-pink-light: var(--vhibes-light);
+  --color-vibecaster-pink-dark: var(--vhibes-primary);
 
   /* Legacy colors (commented for reference) */
   /* --color-primary: var(--primary);
@@ -61,11 +64,11 @@
 }
 
 /* 
-  STEP 3: Global styles for VibeCaster
+  STEP 3: Global styles for vhibes
 */
 body {
   font-family: 'DM Mono', monospace;
-  background: linear-gradient(180deg, #0C0420 0%, #5D3C64 100%);
+  background: linear-gradient(180deg, #C63A35 0%, #EA504B 100%);
   min-height: 100vh;
   color: #ffffff;
   overflow-x: hidden;
@@ -79,24 +82,37 @@ html {
   max-width: 100vw;
 }
 
-/* VibeCaster gradient background */
-.vibecaster-bg {
-  background: linear-gradient(180deg, #0C0420 0%, #5D3C64 100%);
+/* vhibes gradient background */
+.vhibes-bg {
+  background: linear-gradient(180deg, #C63A35 0%, #EA504B 100%);
 }
 
-/* Card styles for VibeCaster */
+/* Legacy class for backward compatibility */
+.vibecaster-bg {
+  background: linear-gradient(180deg, #C63A35 0%, #EA504B 100%);
+}
+
+/* Card styles for vhibes */
+.vhibes-card {
+  background: rgba(198, 58, 53, 0.1);
+  border: 1px solid rgba(234, 80, 75, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+}
+
+/* Legacy class for backward compatibility */
 .vibecaster-card {
-  background: rgba(93, 60, 100, 0.1);
-  border: 1px solid rgba(159, 100, 150, 0.2);
+  background: rgba(198, 58, 53, 0.1);
+  border: 1px solid rgba(234, 80, 75, 0.2);
   backdrop-filter: blur(10px);
   border-radius: 12px;
 }
 
 /* Glass morphism effect */
 .glass-effect {
-  background: rgba(159, 100, 150, 0.05);
+  background: rgba(234, 80, 75, 0.05);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(159, 100, 150, 0.1);
+  border: 1px solid rgba(234, 80, 75, 0.1);
 }
 
 /* Responsive NFT Gallery Grid (keeping for reference) */
@@ -110,9 +126,9 @@ html {
   }
 }
 
-/* VibeCaster AppKit Button Styling */
+/* vhibes AppKit Button Styling */
 appkit-button::part(button) {
-  background: #9F6496 !important;
+  background: #EA504B !important;
   color: white !important;
   border-radius: 8px !important;
   font-weight: 600 !important;
@@ -121,7 +137,7 @@ appkit-button::part(button) {
 }
 
 appkit-button::part(button):hover {
-  background: #B475A3 !important;
+  background: #FF7873 !important;
 }
 
 appkit-button::part(button):active {
@@ -130,7 +146,7 @@ appkit-button::part(button):active {
 
 /* Alternative selectors for AppKit button */
 appkit-button button {
-  background: #9F6496 !important;
+  background: #EA504B !important;
   color: white !important;
   border-radius: 8px !important;
   font-weight: 600 !important;
@@ -138,7 +154,7 @@ appkit-button button {
 }
 
 appkit-button button:hover {
-  background: #B475A3 !important;
+  background: #FF7873 !important;
 }
 
 appkit-button button:active {
